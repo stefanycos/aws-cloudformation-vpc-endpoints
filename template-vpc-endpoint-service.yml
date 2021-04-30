@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Necessary parameters and resources to create a VPC Endpoint Service
+
+Parameters:
+  AWSPrincipals:
+    Description: "Comma separated list of IAM users, IAM roles, or AWS accounts. E.g. arn:aws:iam::000000000001:root, arn:aws:iam::000000000001:root"
+    Type: String
+  SubnetIDs:
+    Description: "Comma separated list of subnet ids of the VPC account"
+    Type: String
+
+Resources:
+  
+  # Creation of network Load Balancer, will be used for the VPC Endpoint Service
+  # Should point to the application/service that we want to expose
+  # If already existed, we could pass the Arn as a parameter instead of creating a new one
+  NetworkLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Sub "nlb-example-for-endpoint-service"
+      Type: network
+      Scheme: internal
+      Subnets: !Split [",", !Ref SubnetIDs]
+      LoadBalancerAttributes:
+        - Key: load_balancing.cross_zone.enabled
+          Value: true
+  
+  # Creation of the VPC Endpoint Service
+  VPCEndpointService:
+    Type: AWS::EC2::VPCEndpointService
+    Properties: 
+      AcceptanceRequired: true
+      NetworkLoadBalancerArns: 
+        - !Ref NetworkLoadBalancer
+  
+  # Giving permission for AWS Principals to access the VPC Endpoint created
+  VPCEndpointServicePermissions:
+    Type: AWS::EC2::VPCEndpointServicePermissions
+    Properties: 
+      AllowedPrincipals: !Split [",", !Ref AWSPrincipals]
+      ServiceId: !Ref VPCEndpointService
+
+# Exporting the LoadBalancer Arn, so will be available to be used in other Templates.
+Outputs:
+  NetworkLoadBalancer:
+    Description: LoadBalancer ARN
+    Value: !Ref NetworkLoadBalancer
+    Export:
+      Name: NetworkLoadBalancerArn

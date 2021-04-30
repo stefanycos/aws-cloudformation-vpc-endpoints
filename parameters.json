@@ -1,0 +1,10 @@
+[
+  {
+    "ParameterKey": "AWSPrincipals",
+    "ParameterValue": "arn:aws:iam::000000000001:root, arn:aws:iam::000000000001:root"
+  },
+  {
+    "ParameterKey": "SubnetIDs",
+    "ParameterValue": "subnet-000000,subnet-111111,subnet-222222"
+  }
+]

@@ -15,6 +15,8 @@ Understanding Concepts
 - The technology that provides private connectivity between VPCs and services.
 - To use AWS PrivateLink, create a VPC endpoint for a service in your VPC. You create the type of VPC endpoint required by the supported service. This creates an elastic network interface in your subnet with a private IP address that serves as an entry point for traffic destined to the service.
 
+![alt text](https://d2908q01vomqb2.cloudfront.net/5b384ce32d8cdef02bc3a139d4cac0a22bb029e8/2018/07/26/rsz_privatelink-blog-diagram.jpg)
+
 ### Cloudformation Templates
 
 - We can use **[cloudformation](https://aws.amazon.com/pt/cloudformation/)** templates (I've made some examples available in this repository) to create the endpoints aboved mentioned.

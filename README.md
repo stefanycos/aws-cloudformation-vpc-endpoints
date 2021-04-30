@@ -20,3 +20,6 @@ Understanding Concepts
 - We can use **[cloudformation](https://aws.amazon.com/pt/cloudformation/)** templates (I've made some examples available in this repository) to create the endpoints aboved mentioned.
 - It's possible to pass cloudformation parameters through a json file when using AWS CLI to create Stacks, **parameters.json** is the example parameters for the template-vpc-endpoint-service.yml template.
 
+**References**
+- https://docs.aws.amazon.com/vpc/latest/privatelink/endpoint-services-overview.html
+- https://rivery.io/docs/configuring-aws-privatelink

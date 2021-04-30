@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Necessary parameters and resources to create a VPC Endpoint
+
+Parameters:
+  VPCID:
+    Description: "Account VPC ID"
+    Type: String
+  SecurityGroupId:
+    Description: "VPC Endpoint Security Group ID"
+    Type: String
+  ServiceName:
+    # After the provider account create a VPC Endpoint Service a ServiceName will be available (in details Tab), this should be used here.
+    Description: "Service Name destiantion"
+    Type: String
+  SubnetIDs:
+    Description: "Comma separated list of subnet ids of the VPC account"
+    Type: String
+
+Resources:
+  
+  # Creation of the VPC Endpoint
+  VPCEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties: 
+      SecurityGroupIds: 
+        - !Ref SecurityGroupId
+      ServiceName: !Ref ServiceName
+      SubnetIds: !Split [",", !Ref SubnetIDs]
+      VpcEndpointType: Interface
+      VpcId: !Ref VPCID
